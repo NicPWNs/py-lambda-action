@@ -33,10 +33,9 @@ update_function_layers(){
  	do
 		function_state=$(aws lambda get-function --function-name "${INPUT_LAMBDA_FUNCTION_NAME}" --query 'Configuration.State')
   		function_status=$(aws lambda get-function --function-name "${INPUT_LAMBDA_FUNCTION_NAME}" --query 'Configuration.LastUpdateStatus')
-		sleep 1
+    		echo "Waiting... Current Function State is '$function_state' and Function Status is '$function_status'"
+		sleep 10
 	done
- 	echo "The Function State is: $function_state"
- 	echo "The Function Status is: $function_status"
 	aws lambda update-function-configuration --function-name "${INPUT_LAMBDA_FUNCTION_NAME}" --layers "${INPUT_LAMBDA_LAYER_ARN}:${LAYER_VERSION}"
 }
 
