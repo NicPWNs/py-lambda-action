@@ -4,7 +4,12 @@ set -e
 install_zip_dependencies(){
 	echo "Installing and zipping dependencies..."
 	mkdir python
-	pip${INPUT_PYTHON_VERSION} install --target=python -r "${INPUT_REQUIREMENTS_TXT}"
+	pip${INPUT_PYTHON_VERSION} install \
+		--platform manylinux2014_x86_64 \
+		--implementation cp \
+		--only-binary=:all: \
+		--target=python \
+		-r "${INPUT_REQUIREMENTS_TXT}"
 	zip -r dependencies.zip ./python
 }
 
